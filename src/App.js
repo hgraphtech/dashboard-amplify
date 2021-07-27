@@ -1,25 +1,40 @@
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { API, graphqlOperation } from 'aws-amplify'
+import { render } from 'react-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+
+const query = `
+  query {
+    listCommodityTables {
+      items {
+        id commodity price om sm
+      }
+    }
+  }
+`
+
+
+class App extends Component {
+  state = { commoditiestable: [] }
+  async componentDidMount() {
+    const data = await API.graphql(graphqlOperation(query));
+    console.log(data)
+  }
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+        </header>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          {this.state.commoditiestable}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      </div>
+    );
+  }
+
 }
 
 export default App;

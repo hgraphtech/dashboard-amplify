@@ -1,0 +1,7 @@
+type CommodityTable @model {
+  id: ID!
+  commodity: String!
+  price: Float
+  om: Float
+  sm: Float
+}
